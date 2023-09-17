@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Automated Testing</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .test-passed {
+            color: rgb(239, 150, 61);
+        }
+        .test-failed {
+            color: rgb(96, 245, 108);
+        }
+    </style>
+</head>
+<body>
+    <h1>Automated Testing Example</h1>
+    <div id="test-results"></div>
+
+    <script>
+        // Define a function to run a test case and display the result
+        function runTest(testName, testFunction) {
+            try {
+                testFunction();
+                logTestResult(testName, 'Passed', 'test-passed');
+            } catch (error) {
+                logTestResult(testName, 'Failed', 'test-failed', error.message);
+            }
+        }
+
+        // Define a function to log the test result
+        function logTestResult(testName, status, className, errorMessage = '') {
+            const resultElement = document.getElementById('test-results');
+            const testResult = document.createElement('div');
+            testResult.className = className;
+            testResult.innerHTML = `<strong>${testName}:</strong> ${status}`;
+            if (errorMessage) {
+                testResult.innerHTML += `<br><em>Error: ${errorMessage}</em>`;
+            }
+            resultElement.appendChild(testResult);
+        }
+
+        // Example test cases
+        function add(a, b) {
+            return a + b;
+        }
+
+        function subtract(a, b) {
+            return a - b;
+        }
+
+        // Test cases
+        runTest('Addition Test', () => {
+            const result = add(3, 2);
+            if (result !== 5) {
+                throw new Error(`Expected 5 but got ${result}`);
+            }
+        });
+
+        runTest('Subtraction Test', () => {
+            const result = subtract(5, 4);
+            if (result !== 2) {
+                throw new Error(`Expected 2 but got ${result}`);
+            }
+        });
+    </script>
+</body>
+</html>
